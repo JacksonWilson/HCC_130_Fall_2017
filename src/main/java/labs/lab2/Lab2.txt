@@ -1,0 +1,44 @@
+Jackson Wilson
+
+Milky Way Galaxy Classes:
+
+SolarSystem:
+    Attributes:
+        - Star
+        - Map of Planets and their Orbits
+    Behaviors:
+        - draw (creates a picture of the solar system)
+        - check if collapse (if star is collapsed then destroy all of the planets)
+Orbit:
+    Attributes:
+        - double radius
+        - double speed
+    Behaviors:
+        - none
+Planet:
+    Attributes:
+        - double radius
+        - List of Aliens
+        - boolean isGas
+        - boolean hasCore
+    Behaviors:
+        - spawn life (randomly generates a new alien)
+Star:
+    Attributes:
+        - int age
+        - double radius
+    Behaviors:
+        - collapse (makes radius zero)
+Alien:
+    Attributes:
+        - String name
+        - int age
+    Behaviors:
+        - speak
+IntelligentAlien (extends Alien):
+    Attributes:
+        - int iq
+        - String catch phrase
+    Behaviors:
+        - add two numbers
+        - override speak (says catch phrase)

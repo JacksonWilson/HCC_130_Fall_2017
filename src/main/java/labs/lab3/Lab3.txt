@@ -1,0 +1,87 @@
+SchoolMember:
+    Attributes:
+        - age
+        - address
+    Behaviors:
+        - sleep()
+        - attendClass()
+
+Student (extends SchoolMember):
+    Attributes:
+        - workEthic
+        - major
+    Behaviors:
+        - study()
+        - party()
+
+Professor (extends SchoolMember):
+    Attributes:
+        - tenure
+        - degree
+    Behaviors:
+        - prepareForClass()
+        - pontificate()
+
+Media:
+    Attributes:
+        - title
+        - price
+    Behaviors:
+        - none
+
+DigitalMedia (extends Media):
+    Attributes:
+        - format
+        - numberOfBytes
+    Behaviors:
+        - none
+
+PhysicalMedia (extends Media):
+    Attributes:
+        - font
+        - numberOfPages
+    Behaviors:
+        - none
+
+DVD (extends DigitalMedia):
+    Attributes:
+        - storageCapacity
+        - type
+        - layers
+    Behaviors:
+        - none
+
+eBook (extends DigitalMedia):
+    Attributes:
+        - numberOfChapters
+        - author
+    Behaviors:
+        - none
+
+youtubeVideo (extends DigitalMedia):
+    Attributes:
+        - resolution
+        - length
+    Behaviors:
+        - none
+
+Magazine (extends PhysicalMedia):
+    Attributes:
+        - editor
+        - frequencyOfPublication
+    Behaviors:
+        - none
+
+Book (extends PhysicalMedia):
+    Attributes:
+        - ISBN
+        - publisher
+    Behaviors:
+        - none
+
+Newspaper (extends PhysicalMedia):
+    Attributes:
+        - journalist
+        - sections
+    Behaviors:
+        - none
