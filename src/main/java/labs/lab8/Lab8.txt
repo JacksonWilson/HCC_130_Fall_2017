@@ -1,0 +1,4 @@
+1. 42 classes (plus 2 exceptions)
+2. javax.swing.plaf
+3. 15
+4. E and PI

@@ -9,6 +9,6 @@ class Sphere {
 	}
 
 	double getVolume() {
-		return 4 / 3 * pi * Math.pow(radius, 3);
+		return 4.0 / 3 * pi * Math.pow(radius, 3);
 	}
 }
