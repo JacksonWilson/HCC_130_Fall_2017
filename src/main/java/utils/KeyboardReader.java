@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 /**
  * Adapted from the original KeyboardReader written by Nicolaas tenBroek for CSCI 130.
@@ -16,9 +17,22 @@ import java.io.InputStreamReader;
  * <p>Copyright Jackson Wilson (c) 2017</p>
  * 
  * @author Jackson Wilson
- * @version 1.1.1
+ * @version 1.2.0
  */
 public class KeyboardReader extends BufferedReader {
+    private static Map<InputStream, KeyboardReader> instances;
+
+    public static KeyboardReader getInstance() {
+        return getInstance(System.in);
+    }
+
+    public static KeyboardReader getInstance(InputStream inStream) {
+        if (!instances.containsKey(inStream))
+            instances.put(inStream, new KeyboardReader(inStream));
+        return instances.get(inStream);
+    }
+
+    private InputStream inStream;
 
     /**
      * Creates a new KeyboardReader with the given {@link java.io.InputStream}.
@@ -27,6 +41,13 @@ public class KeyboardReader extends BufferedReader {
      */
     public KeyboardReader(InputStream inStream) {
         super(new InputStreamReader(inStream));
+        instances.put(this.inStream = inStream, this);
+    }
+
+    @Override
+    public void close() throws IOException {
+        super.close();
+        instances.remove(inStream);
     }
 
     /**
@@ -198,21 +219,48 @@ public class KeyboardReader extends BufferedReader {
             System.out.println("Please enter either \'true\' or \'false\'.");
         } while (true);
     }
-
+    
     /**
-     * Reads a valid long from the input stream. Prompts the user to enter again if an
-     * invalid value is entered.
+     * Prompts user and reads a valid long int from the input stream. Prompts the user to
+     * enter again if an invalid value is entered.
      * 
-     * @return A long.
-     * @throws IOException If an I/O error occurs.
+     * @return A long int.
      */
     public long readLong() throws IOException {
+        return readLong(Long.MIN_VALUE, Long.MAX_VALUE, "");
+    }
+    
+    /**
+     * Prompts user and reads a valid long int from the input stream. Prompts the user to
+     * enter again if an invalid value is entered.
+     * 
+     * @param prompt A message to prompt the user for input.
+     * @return A long int.
+     */
+    public long readLong(String prompt) throws IOException {
+        return readLong(Long.MIN_VALUE, Long.MAX_VALUE, prompt);
+    }
+    
+    /**
+     * Prompts user and reads a valid long int from the input stream. Prompts the user to
+     * enter again if an invalid value is entered.
+     * 
+     * @param minValue The minimum acceptable value, inclusive.
+     * @param maxValue The maximum acceptable value, inclusive.
+     * @param prompt A message to prompt the user for input.
+     * @return A long int between minValue and maxValue, inclusive.
+     */
+    public long readLong(long minValue, long maxValue, String prompt) throws IOException {
         String input;
+        long number;
         do {
             try {
-                input = readLine();
-                if (!input.isEmpty() && stringIsNumeric(input))
-                    return Long.parseLong(input);
+                input = readLine(prompt);
+                if (!input.isEmpty() && stringIsNumeric(input)) {
+                    number = Long.parseLong(input);
+                    if (number >= minValue && number <= maxValue)
+                        return number;
+                }
             } catch (NumberFormatException e) {}
             System.out.println("Please enter an integer value between "
                 + Long.MIN_VALUE + " and " + Long.MAX_VALUE);
